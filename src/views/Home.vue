@@ -5,8 +5,8 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
-import Default from "@/layouts/Default.vue";
+import { Options, Vue } from "vue-class-component"
+import Default from "@/layouts/Default.vue"
 
 @Options({
   components: {
