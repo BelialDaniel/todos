@@ -50,11 +50,11 @@ export default class SignUp extends Vue {
     password_2: "",
   }
 
-  onSignUp() {
+  onSignUp(): void {
     this.signUp()
   }
 
-  async signUp() {
+  async signUp(): Promise<void> {
     const nickname = this.signUpForm.nickname
     const email = this.signUpForm.email
     const password_1 = this.signUpForm.password_1
