@@ -1,43 +1,36 @@
 <template>
-  <Default>
-    <form @submit.prevent>
-      <h1>Login</h1>
-      <div>
-        <label for="email1">Email</label>
-        <input
-          type="text"
-          v-model.trim="loginForm.email"
-          placeholder="mail@email.com"
-          id="email1"
-        />
-      </div>
-      <div>
-        <label for="password1">Password</label>
-        <input
-          type="password"
-          v-model.trim="loginForm.password"
-          placeholder="******"
-          id="password"
-        />
-      </div>
-      <button class="button" @click="onLogin">Log In</button>
-    </form>
-  </Default>
+  <form @submit.prevent>
+    <h1>Login</h1>
+    <div>
+      <label for="email">Email</label>
+      <input
+        type="text"
+        v-model.trim="logInForm.email"
+        placeholder="mail@email.com"
+        id="email"
+      />
+    </div>
+    <div>
+      <label for="password">Password</label>
+      <input
+        type="password"
+        v-model.trim="logInForm.password"
+        placeholder="******"
+        id="password"
+      />
+    </div>
+    <button class="button" @click="onLogin">Log In</button>
+  </form>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component"
-import Default from "@/layouts/Default.vue"
-import LoginForm from "@/types/loginForm"
+import LogInForm from "@/types/logInForm"
 import * as fb from "../firebase"
 
-@Options({
-  components: {
-    Default,
-  },
-})
+@Options({})
 export default class Login extends Vue {
-  loginForm: LoginForm = {
+  logInForm: LogInForm = {
     email: "",
     password: "",
   }
@@ -47,8 +40,8 @@ export default class Login extends Vue {
   }
 
   async login(): Promise<void> {
-    const email = this.loginForm.email
-    const password = this.loginForm.password
+    const email = this.logInForm.email
+    const password = this.logInForm.password
 
     if (!email || !password) {
       throw new Error("Error missing Fields")
