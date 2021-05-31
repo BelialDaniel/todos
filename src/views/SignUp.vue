@@ -1,47 +1,54 @@
 <template>
-  <form @submit.prevent>
-    <h1>Sign up</h1>
-    <div>
-      <label for="email">Nickname</label>
-      <input type="text" v-model.trim="signUpForm.nickname" id="nickname" />
-    </div>
-    <div>
-      <label for="email">Email</label>
-      <input
-        type="text"
-        v-model.trim="signUpForm.email"
-        placeholder="mail@email.com"
-        id="email"
-      />
-    </div>
-    <div>
-      <label for="password1">Password</label>
-      <input
-        type="password"
-        v-model.trim="signUpForm.password_1"
-        placeholder="******"
-        id="password1"
-      />
-    </div>
-    <div>
-      <label for="password2">Repeat password</label>
-      <input
-        type="password"
-        v-model.trim="signUpForm.password_2"
-        placeholder="******"
-        id="password2"
-      />
-    </div>
-    <button class="button" @click="onSignUp">Sign Up</button>
-  </form>
+  <PublicLayout>
+    <form @submit.prevent>
+      <h1>Sign up</h1>
+      <div>
+        <label for="email">Nickname</label>
+        <input type="text" v-model.trim="signUpForm.nickname" id="nickname" />
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input
+          type="text"
+          v-model.trim="signUpForm.email"
+          placeholder="mail@email.com"
+          id="email"
+        />
+      </div>
+      <div>
+        <label for="password1">Password</label>
+        <input
+          type="password"
+          v-model.trim="signUpForm.password_1"
+          placeholder="******"
+          id="password1"
+        />
+      </div>
+      <div>
+        <label for="password2">Repeat password</label>
+        <input
+          type="password"
+          v-model.trim="signUpForm.password_2"
+          placeholder="******"
+          id="password2"
+        />
+      </div>
+      <button class="button" @click="onSignUp">Sign Up</button>
+    </form>
+  </PublicLayout>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component"
 import SignUpForm from "@/types/signUpForm"
+import PublicLayout from "@/layouts/Public.vue"
 import * as fb from "../firebase"
 
-@Options({})
+@Options({
+  components: {
+    PublicLayout,
+  },
+})
 export default class SignUp extends Vue {
   signUpForm: SignUpForm = {
     nickname: "",
