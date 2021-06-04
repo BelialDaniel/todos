@@ -41,8 +41,8 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component"
 import SignUpForm from "@/types/signUpForm"
-import PublicLayout from "@/layouts/Public.vue"
-import * as fb from "../firebase"
+import PublicLayout from "@/layouts/PublicLayout.vue"
+import * as fb from "@/firebase"
 
 @Options({
   components: {

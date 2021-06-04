@@ -1,17 +1,12 @@
 <template>
-  <Default>
+  <MainLayout>
     <div>home</div>
-  </Default>
+  </MainLayout>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component"
-import Default from "@/layouts/Default.vue"
 
-@Options({
-  components: {
-    Default,
-  },
-})
+@Options({})
 export default class Home extends Vue {}
 </script>

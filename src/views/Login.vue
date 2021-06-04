@@ -28,8 +28,8 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component"
 import LogInForm from "@/types/logInForm"
-import PublicLayout from "@/layouts/Public.vue"
-import * as fb from "../firebase"
+import PublicLayout from "@/layouts/PublicLayout.vue"
+import * as fb from "@/firebase"
 
 @Options({
   components: {
@@ -56,7 +56,7 @@ export default class Login extends Vue {
 
     try {
       const { user } = await fb.auth.signInWithEmailAndPassword(email, password)
-      console.log(user)
+      this.$router.push("/")
     } catch (exception) {
       throw new Error(exception)
     }

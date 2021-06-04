@@ -12,15 +12,15 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component"
-import * as fb from "../firebase"
+import * as fb from "@/firebase"
 
 @Options({})
 export default class MainLayout extends Vue {
-  onLogOut() {
+  onLogOut(): void {
     this.logout()
   }
 
-  async logout() {
+  async logout(): Promise<void> {
     try {
       await fb.auth.signOut()
     } catch (exception) {
