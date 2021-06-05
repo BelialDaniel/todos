@@ -29,7 +29,8 @@
 import { Options, Vue } from "vue-class-component"
 import LogInForm from "@/types/forms/logInForm"
 import PublicLayout from "@/layouts/PublicLayout.vue"
-import FirebaseApi from "@/api/firebaseApi"
+import UserManager from "@/managers/userManager"
+import { useStore } from "@/store"
 
 @Options({
   components: {
@@ -37,7 +38,6 @@ import FirebaseApi from "@/api/firebaseApi"
   },
 })
 export default class Login extends Vue {
-  api: FirebaseApi = new FirebaseApi()
   logInForm: LogInForm = {
     email: "",
     password: "",
@@ -48,15 +48,14 @@ export default class Login extends Vue {
   }
 
   login(): void {
-    const email: string = this.logInForm.email
-    const password: string = this.logInForm.password
-
-    if (!email || !password) {
+    if (!this.logInForm.email || !this.logInForm.password) {
       throw new Error("Error missing Fields")
     }
 
     try {
-      this.api.getUser(email, password)
+      UserManager.getInstance().logIn(this.logInForm)
+      const store = useStore()
+      console.log(store)
       this.$router.push("/")
     } catch (exception) {
       throw new Error(exception)

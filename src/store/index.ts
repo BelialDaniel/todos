@@ -4,9 +4,11 @@ import User from "@/types/user"
 
 const key: InjectionKey<Store<User>> = Symbol()
 const store = createStore<User>({
-  state: new User(),
+  state: new User("", "", "", "", []),
 })
 
-const useStore = (): Store<User> => baseUseStore(key)
+const useStore = (): Store<User> => {
+  return baseUseStore(key)
+}
 
 export { key, store, useStore }

@@ -21,7 +21,7 @@ export default abstract class API {
     lastName: string,
     email: string,
     password: string
-  ): Promise<void> {
+  ): Promise<User> | never {
     throw new Error("Must implement this function")
   }
 }

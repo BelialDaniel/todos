@@ -46,7 +46,7 @@
 import { Options, Vue } from "vue-class-component"
 import SignUpForm from "@/types/forms/signUpForm"
 import PublicLayout from "@/layouts/PublicLayout.vue"
-import FirebaseApi from "@/api/firebaseApi"
+import UserManager from "@/managers/userManager"
 
 @Options({
   components: {
@@ -54,7 +54,6 @@ import FirebaseApi from "@/api/firebaseApi"
   },
 })
 export default class SignUp extends Vue {
-  api: FirebaseApi = new FirebaseApi()
   signUpForm: SignUpForm = {
     name: "",
     lastName: "",
@@ -80,7 +79,7 @@ export default class SignUp extends Vue {
     }
 
     try {
-      this.api.createUser(name, lastName, email, password_1)
+      UserManager.getInstance().createUser(this.signUpForm)
       this.$router.push("/")
     } catch (exception) {
       throw new Error(exception)
