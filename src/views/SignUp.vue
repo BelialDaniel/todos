@@ -3,8 +3,12 @@
     <form @submit.prevent>
       <h1>Sign up</h1>
       <div>
-        <label for="email">Nickname</label>
-        <input type="text" v-model.trim="signUpForm.nickname" id="nickname" />
+        <label for="email">Name</label>
+        <input type="text" v-model.trim="signUpForm.name" id="nickname" />
+      </div>
+      <div>
+        <label for="email">Last name</label>
+        <input type="text" v-model.trim="signUpForm.lastName" id="nickname" />
       </div>
       <div>
         <label for="email">Email</label>
@@ -40,9 +44,9 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component"
-import SignUpForm from "@/types/signUpForm"
+import SignUpForm from "@/types/forms/signUpForm"
 import PublicLayout from "@/layouts/PublicLayout.vue"
-import * as fb from "@/firebase"
+import FirebaseApi from "@/api/firebaseApi"
 
 @Options({
   components: {
@@ -50,8 +54,10 @@ import * as fb from "@/firebase"
   },
 })
 export default class SignUp extends Vue {
+  api: FirebaseApi = new FirebaseApi()
   signUpForm: SignUpForm = {
-    nickname: "",
+    name: "",
+    lastName: "",
     email: "",
     password_1: "",
     password_2: "",
@@ -62,12 +68,10 @@ export default class SignUp extends Vue {
   }
 
   async signUp(): Promise<void> {
-    const nickname = this.signUpForm.nickname
-    const email = this.signUpForm.email
-    const password_1 = this.signUpForm.password_1
-    const password_2 = this.signUpForm.password_2
+    const { name, lastName, email, password_1, password_2 }: SignUpForm =
+      this.signUpForm
 
-    if (!nickname || !email || !password_1 || !password_2) {
+    if (!name || !lastName || !email || !password_1 || !password_2) {
       throw new Error("Error missing fields")
     }
 
@@ -76,16 +80,8 @@ export default class SignUp extends Vue {
     }
 
     try {
-      const { user } = await fb.auth.createUserWithEmailAndPassword(
-        email,
-        password_1
-      )
-
-      if (user) {
-        await fb.usersCollection.doc(user.uid).set({
-          nickname: nickname,
-        })
-      }
+      this.api.createUser(name, lastName, email, password_1)
+      this.$router.push("/")
     } catch (exception) {
       throw new Error(exception)
     }

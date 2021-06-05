@@ -1,5 +1,6 @@
 type SignUpForm = {
-  nickname: string
+  name: string
+  lastName: string
   email: string
   password_1: string
   password_2: string

@@ -27,9 +27,9 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component"
-import LogInForm from "@/types/logInForm"
+import LogInForm from "@/types/forms/logInForm"
 import PublicLayout from "@/layouts/PublicLayout.vue"
-import * as fb from "@/firebase"
+import FirebaseApi from "@/api/firebaseApi"
 
 @Options({
   components: {
@@ -37,6 +37,7 @@ import * as fb from "@/firebase"
   },
 })
 export default class Login extends Vue {
+  api: FirebaseApi = new FirebaseApi()
   logInForm: LogInForm = {
     email: "",
     password: "",
@@ -46,22 +47,20 @@ export default class Login extends Vue {
     this.login()
   }
 
-  async login(): Promise<void> {
-    const email = this.logInForm.email
-    const password = this.logInForm.password
+  login(): void {
+    const email: string = this.logInForm.email
+    const password: string = this.logInForm.password
 
     if (!email || !password) {
       throw new Error("Error missing Fields")
     }
 
     try {
-      const { user } = await fb.auth.signInWithEmailAndPassword(email, password)
+      this.api.getUser(email, password)
       this.$router.push("/")
     } catch (exception) {
       throw new Error(exception)
     }
-
-    return
   }
 }
 </script>
