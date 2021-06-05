@@ -30,7 +30,6 @@ import { Options, Vue } from "vue-class-component"
 import LogInForm from "@/types/forms/logInForm"
 import PublicLayout from "@/layouts/PublicLayout.vue"
 import UserManager from "@/managers/userManager"
-import { useStore } from "@/store"
 
 @Options({
   components: {
@@ -54,8 +53,6 @@ export default class Login extends Vue {
 
     try {
       UserManager.getInstance().logIn(this.logInForm)
-      const store = useStore()
-      console.log(store)
       this.$router.push("/")
     } catch (exception) {
       throw new Error(exception)
