@@ -46,7 +46,7 @@
 import { Options, Vue } from "vue-class-component"
 import SignUpForm from "@/types/forms/signUpForm"
 import PublicLayout from "@/layouts/PublicLayout.vue"
-import UserManager from "@/managers/userManager"
+// import UserManager from "@/managers/userManager"
 
 @Options({
   components: {
@@ -79,7 +79,7 @@ export default class SignUp extends Vue {
     }
 
     try {
-      UserManager.getInstance().createUser(this.signUpForm)
+      // UserManager.getInstance().createUser(this.signUpForm)
       this.$router.push("/")
     } catch (exception) {
       throw new Error(exception)

@@ -12,10 +12,10 @@ const firebaseConfig = {
   messagingSenderId: process.env.VUE_APP_MESSAGING_SENDER_ID,
   appId: process.env.VUE_APP_APP_ID,
 }
-firebase.initializeApp(firebaseConfig)
+const firebaseApp: any = firebase.initializeApp(firebaseConfig)
 
 const db = firebase.firestore()
-const auth = firebase.auth()
+const auth = firebase.auth(firebaseApp)
 
 // collection references
 const usersCollection = db.collection("users")

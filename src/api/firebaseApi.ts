@@ -10,9 +10,14 @@ export default class FirebaseApi implements API {
       if (!user) {
         throw new Error("User not found")
       }
+      const userProfile = await fb.usersCollection.doc(user.uid).get()
+      const data: User = userProfile.data() as User
 
-      const userModel: User = await this.getUserFromCollection(user.uid, email)
-      return userModel
+      return {
+        ...data,
+        id: user.uid,
+        email,
+      }
     } catch (error) {
       throw new Error("Error retrieving user")
     }
@@ -35,7 +40,7 @@ export default class FirebaseApi implements API {
       }
 
       this.setUserData(user.uid, name, lastName, [])
-      return new User(user.uid, name, lastName, email, [])
+      return { id: user.uid, name, lastName, email, todos: [] }
     } catch (exception) {
       throw new Error("User could not be created")
     }
@@ -62,21 +67,6 @@ export default class FirebaseApi implements API {
       })
     } catch (exception) {
       throw new Error("Could not set data to user")
-    }
-  }
-
-  /**
-   *
-   * @param Id
-   * @returns
-   */
-  async getUserFromCollection(id: string, email: string): Promise<User> {
-    try {
-      const userProfile = await fb.usersCollection.doc(id).get()
-      const data: User = userProfile.data() as User
-      return new User(id, data.name, data.lastName, email, data.todos)
-    } catch (error) {
-      throw new Error("Could not retrieve user from collection")
     }
   }
 }
